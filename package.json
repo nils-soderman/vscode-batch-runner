@@ -1,35 +1,63 @@
 {
-	"name": "batch-utils",
-	"displayName": "Batch Utils",
-	"description": "",
+	"name": "batch-runner",
+	"displayName": "Batch Runner",
+	"description": "Execute batch file in the vscode terminal",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.64.0"
 	},
+	"icon": "media/icon.png",
+	"qna": "marketplace",
+	"license": "SEE LICENSE IN LICENSE",
+	"keywords": [
+		"batch",
+		".bat",
+		"execute",
+		"run",
+		"menu",
+		"terminal"
+	],
 	"categories": [
 		"Other",
 		"Debuggers"
 	],
 	"activationEvents": [
-		"onCommand:batch-utils.runCurrentFile",
+		"onCommand:batch-utils.execBatchFile",
 		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "batch-utils.runCurrentFile",
-				"category": "Bat Utils",
-				"title": "Run Current File"
+				"command": "batch-utils.execBatchFile",
+				"category": "Batch Runner",
+				"title": "Run Batch File in Terminal",
+				"shortTitle": "Run .bat File",
+				"icon": "$(play)",
+				"enablement": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
 			}
 		],
 		"keybindings" : [
 			{
-				"command": "batch-utils.runCurrentFile",
+				"command": "batch-utils.execBatchFile",
 				"key": "F5",
-				"when": "editorLangId == batch"
+				"enablement": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported && !inDebugMode"
 			}
-		]
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "batch-utils.execBatchFile",
+					"group": "batch"
+				}
+			],
+			"editor/title/run": [
+				{
+					"command": "batch-utils.execBatchFile",
+					"group": "batch"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -51,5 +79,9 @@
 		"mocha": "^8.4.0",
 		"typescript": "^4.3.2",
 		"vscode-test": "^1.5.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nils-soderman/vscode-batch-runner"
 	}
 }
