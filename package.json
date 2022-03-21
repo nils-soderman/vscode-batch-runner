@@ -22,8 +22,7 @@
 		"Debuggers"
 	],
 	"activationEvents": [
-		"onCommand:batch-utils.execBatchFile",
-		"*"
+		"onCommand:batch-utils.execBatchFile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
