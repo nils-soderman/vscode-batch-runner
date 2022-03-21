@@ -1,6 +1,7 @@
 {
 	"name": "batch-runner",
 	"displayName": "Batch Runner",
+	"publisher": "NilsSoderman",
 	"description": "Execute batch file in the vscode terminal",
 	"version": "0.0.1",
 	"engines": {
@@ -21,6 +22,17 @@
 		"Other",
 		"Debuggers"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/nils-soderman/vscode-batch-runner"
+	},
+	"bugs": {
+		"url": "https://github.com/nils-soderman/vscode-batch-runner/issues"
+	},
+	"author": {
+		"name": "Nils Söderman",
+		"url": "https://nilssoderman.com"
+	},
 	"activationEvents": [
 		"onCommand:batch-utils.execBatchFile"
 	],
@@ -78,9 +90,5 @@
 		"mocha": "^9.2.2",
 		"typescript": "^4.3.2",
 		"vscode-test": "^1.4.1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/nils-soderman/vscode-batch-runner"
 	}
 }
