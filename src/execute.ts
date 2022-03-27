@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
 import * as path from 'path';
+// import * as child_process from 'child_process';
 
 
 const TERMINAL_NAME = "Batch Runner";
@@ -24,6 +25,15 @@ function getTerminal(bEnsureExists = true)
     }
 }
 
+function runCommandBatchInTerminal(filepath: string) {
+    const terminal = getTerminal();
+    if (!terminal) {
+        return false;
+    }
+    terminal.sendText(`cmd /c "${filepath}"`, true);
+    terminal.show();
+
+}
 
 export function runBatFile(filepath: string) {
     if (!isBatchFile(filepath)) {
@@ -31,13 +41,9 @@ export function runBatFile(filepath: string) {
         vscode.window.showErrorMessage(`Batch Runner: ${filename} was not recognized as a batch file.`);
         return false;
     }
-    const terminal = getTerminal();
-    if (!terminal) {
-        return false;
-    }
-
-    terminal.sendText(filepath, true);
-    terminal.show();
-
+    
+    // const a = child_process.exec(`cmd /c start ${filepath}`);
+    runCommandBatchInTerminal(filepath);
+    
     return true;
 }
