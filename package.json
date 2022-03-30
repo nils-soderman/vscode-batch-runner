@@ -74,10 +74,14 @@
 			{
 				"title": "Batch Runner",
 				"properties": {
-					"batchrunner.openInDefaultEditor": {
-						"type": "boolean",
-						"default": false,
-						"description": "Run batch files in their default editor instead of the VSCode terminal."
+					"batchrunner.runBatchIn": {
+						"type": "string",
+						"enum": [
+							"Terminal",
+							"cmd"
+						],
+						"default": "Terminal",
+						"description": "Where the batch file should be executed"
 					}
 				}
 			}
