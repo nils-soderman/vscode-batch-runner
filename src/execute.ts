@@ -25,7 +25,7 @@ function getTerminal(bEnsureExists = true)
     }
 }
 
-function runCommandBatchInTerminal(filepath: string) {
+function runBatchFileInTerminal(filepath: string) {
     const terminal = getTerminal();
     if (!terminal) {
         return false;
@@ -35,7 +35,7 @@ function runCommandBatchInTerminal(filepath: string) {
 
 }
 
-export function runBatFile(filepath: string) {
+export function runBatchFile(filepath: string) {
     if (!isBatchFile(filepath)) {
         const filename = path.basename(filepath);
         vscode.window.showErrorMessage(`Batch Runner: ${filename} was not recognized as a batch file.`);
@@ -43,7 +43,7 @@ export function runBatFile(filepath: string) {
     }
     
     // const a = child_process.exec(`cmd /c start ${filepath}`);
-    runCommandBatchInTerminal(filepath);
+    runBatchFileInTerminal(filepath);
     
     return true;
 }

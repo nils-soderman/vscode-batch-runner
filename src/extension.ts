@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			if (filepath) {
-				execute.runBatFile(filepath);
+				execute.runBatchFile(filepath);
 			}
 		})
 	);
