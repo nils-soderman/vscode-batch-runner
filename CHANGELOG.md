@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.0.3
+(x-03-2022)
+
+- Fixed *"Run batch file in terminal"* icon showing up even for files that are not batch files.
+
+
 ## v0.0.2
 (27-03-2022)
 

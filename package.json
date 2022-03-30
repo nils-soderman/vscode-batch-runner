@@ -3,7 +3,7 @@
 	"displayName": "Batch Runner",
 	"publisher": "NilsSoderman",
 	"description": "Execute batch file in the vscode terminal",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"engines": {
 		"vscode": "^1.64.0"
 	},
@@ -65,7 +65,8 @@
 			"editor/title/run": [
 				{
 					"command": "batch-utils.execBatchFile",
-					"group": "batch"
+					"group": "batch",
+					"when": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
 				}
 			]
 		}
