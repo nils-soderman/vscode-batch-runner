@@ -69,7 +69,19 @@
 					"when": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
 				}
 			]
-		}
+		},
+		"configuration": [
+			{
+				"title": "Batch Runner",
+				"properties": {
+					"batchrunner.openInDefaultEditor": {
+						"type": "boolean",
+						"default": false,
+						"description": "Run batch files in their default editor instead of the VSCode terminal."
+					}
+				}
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
