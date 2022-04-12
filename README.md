@@ -1,6 +1,6 @@
 # Batch Runner
 
-Quickly run batch *(.bat)* files in the VSCode terminal using:
+Quickly run batch *(.bat / .cmd)* files in the VS Code terminal using:
 
 <br>
 
@@ -10,7 +10,7 @@ If the active document is a .bat file, press <kbd>F5</kbd> to execute it.
 <br>
 
 ### Right Click Menu
-This extension adds the option "Run Batch File in Terminal" when right clicking any .bat file in the explorer.
+This extension adds the option "Run Batch File in Terminal" when right clicking any batch file in the explorer.
 
 ![Context menu option: "Run Batch File in Terminal"](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-context-menu.jpg?raw=true)
 
@@ -18,7 +18,7 @@ This extension adds the option "Run Batch File in Terminal" when right clicking 
 <br>
 
 ### Button
-When a .bat file is open in the editor a small icon is added to the top right corner which can be used to execute the file.
+When a batch file is open in the editor a small icon is added to the top right corner which can be used to execute the file.
 
 ![Button: Run Batch File](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-exec-button.jpg?raw=true)
 
