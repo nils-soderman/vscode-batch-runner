@@ -3,7 +3,7 @@
 	"displayName": "Batch Runner",
 	"publisher": "NilsSoderman",
 	"description": "Execute batch file in the vscode terminal",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.64.0"
 	},
@@ -13,6 +13,8 @@
 	"keywords": [
 		"batch",
 		".bat",
+		".cmd",
+		"cmd",
 		"execute",
 		"run",
 		"menu",
