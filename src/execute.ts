@@ -16,15 +16,6 @@ export function getExtensionConfig() {
 
 
 /**
- * @param filepath The filepath to the batch file
- * @returns true if the filepath is a batch file, otherwise false
- */
-function isBatchFile(filepath: string) {
-    return filepath.toLowerCase().endsWith(".bat");
-}
-
-
-/**
  * Get the 'Batch Runner' terminal used by this extension
  * @param bEnsureExists If terminal doesn't exist, create it
  * @returns The terminal if one could be found/created
@@ -76,13 +67,6 @@ function runBatchFileInCmd(filepath: string) {
  * @returns true if the batch file could be exectued, otherwise false
  */
 export function runBatchFile(filepath: string) {
-    // Make sure the filepath is a batch file
-    if (!isBatchFile(filepath)) {
-        const filename = path.basename(filepath);
-        vscode.window.showErrorMessage(`Batch Runner: ${filename} was not recognized as a batch file.`);
-        return false;
-    }
-
     // Check where we should run the batch file
     const config = getExtensionConfig();
     const runBatchIn: string | undefined = config.get("runBatchIn");
