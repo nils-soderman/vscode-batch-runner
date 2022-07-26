@@ -1,17 +1,48 @@
 import * as vscode from 'vscode';
 
-import * as path from 'path';
 import * as child_process from 'child_process';
+import * as fs from 'fs';
 
 
 const TERMINAL_NAME = "Batch Runner";
+const EXTENSION_CONFIG_NAME = "batchrunner";
+const CMD_PATH_CONFIG_KEY = "cmdPath";
 
 
 /**
  * @returns The workspace configuration for this extension _('batchrunner')_
  */
 export function getExtensionConfig() {
-    return vscode.workspace.getConfiguration("batchrunner");
+    return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME);
+}
+
+
+/**
+ * Get the absolute path to 'cmd.exe'  
+ * Returns undefined if the file could not be located
+ */
+function getCmdPath() {
+    let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
+    if (!cmdPath) {
+        // Fallback to this default path
+        cmdPath = "C:\\windows\\System32\\cmd.exe";
+    }
+
+    // Make sure the path points towards an existing file, otherwise show an error message
+    if (!fs.existsSync(cmdPath)) {
+        const browseButtonText = "Update path";
+        vscode.window.showErrorMessage(`Cmd.exe could not be located at ${cmdPath}`, browseButtonText).then(clickedItem => {
+            if (clickedItem === browseButtonText) {
+                // Open user settings and search for the cmdPath setting
+                const searchPath = `${EXTENSION_CONFIG_NAME}.${CMD_PATH_CONFIG_KEY}`;
+                vscode.commands.executeCommand('workbench.action.openSettings', searchPath);
+            }
+        });
+
+        return undefined;
+    }
+
+    return cmdPath;
 }
 
 
@@ -44,19 +75,32 @@ function runBatchFileInTerminal(filepath: string) {
         return false;
     }
 
-    terminal.sendText(`cmd /c "${filepath}"`, true);
+    const cmdPath = getCmdPath();
+    if (!cmdPath) {
+        return false;
+    }
+
+    terminal.sendText(`${cmdPath} /c "${filepath}"`, true);
     terminal.show();
 
     return true;
 }
+
 
 /**
  * Open a batch file in cmd
  * @param filepath Absolute filepath to the batch file
  */
 function runBatchFileInCmd(filepath: string) {
-    const command = `start cmd /c "${filepath}"`;
+    const cmdPath = getCmdPath();
+    if (!cmdPath) {
+        return false;
+    }
+
+    const command = `start ${cmdPath} /c "${filepath}"`;
     child_process.exec(command);
+
+    return true;
 }
 
 
@@ -70,7 +114,12 @@ export function runBatchFile(filepath: string) {
     // Check where we should run the batch file
     const config = getExtensionConfig();
     const runBatchIn: string | undefined = config.get("runBatchIn");
-    if (runBatchIn?.toLowerCase() === "cmd") {
+    
+    // TODO: Should do an explicit check in the future. 
+    // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
+    // to avoid breaking it for people updating.
+    // if (runBatchIn?.toLowerCase() === "External-cmd") {
+    if (runBatchIn?.toLowerCase().includes("cmd")) {
         return runBatchFileInCmd(filepath);
     }
     else {
