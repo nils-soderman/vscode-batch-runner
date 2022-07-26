@@ -2,8 +2,8 @@
 	"name": "batch-runner",
 	"displayName": "Batch Runner",
 	"publisher": "NilsSoderman",
-	"description": "Execute batch file in the vscode terminal",
-	"version": "0.0.4",
+	"description": "Execute batch files in the VS Code terminal",
+	"version": "0.0.5",
 	"engines": {
 		"vscode": "^1.64.0"
 	},
@@ -80,10 +80,19 @@
 						"type": "string",
 						"enum": [
 							"Terminal",
-							"cmd"
+							"External-cmd"
+						],
+						"enumDescriptions": [
+							"Open the batch files in the built-in VS Code terminal",
+							"Open the batch files in an external cmd window"
 						],
 						"default": "Terminal",
 						"description": "Where the batch file should be executed"
+					},
+					"batchrunner.cmdPath" : {
+						"type": "string",
+						"default": "C:\\windows\\System32\\cmd.exe",
+						"description": "Path to where 'cmd.exe' is located"
 					}
 				}
 			}
