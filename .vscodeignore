@@ -11,5 +11,7 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 
+build-scripts
+
 test.bat
 media/demo
