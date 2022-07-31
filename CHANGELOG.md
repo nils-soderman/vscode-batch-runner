@@ -1,5 +1,13 @@
 # Change Log
 
+## v0.0.6
+(31-07-2022)
+
+- Set working directory to be the directory that the batch file is located in
+
+- Renamed command 'Run Batch File in Terminal' -> 'Run Batch File'
+ 
+
 ## v0.0.5
 (26-07-2022)
 

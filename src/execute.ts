@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
 import * as child_process from 'child_process';
+import * as path from 'path';
 import * as fs from 'fs';
 
 
@@ -80,7 +81,10 @@ function runBatchFileInTerminal(filepath: string) {
         return false;
     }
 
-    terminal.sendText(`${cmdPath} /c "${filepath}"`, true);
+    const directory = path.dirname(filepath);
+
+    // Start with a ';' incause the previous exec stopped with a pause
+    terminal.sendText(`;cd "${directory}";&"${cmdPath}" /c "${filepath}"`, true);
     terminal.show();
 
     return true;
@@ -97,7 +101,10 @@ function runBatchFileInCmd(filepath: string) {
         return false;
     }
 
-    const command = `start ${cmdPath} /c "${filepath}"`;
+    const directory = path.dirname(filepath);
+    
+    // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters
+    const command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
     child_process.exec(command);
 
     return true;
