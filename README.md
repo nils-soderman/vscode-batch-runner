@@ -1,6 +1,6 @@
 # Batch Runner
 
-Quickly run batch *(.bat / .cmd)* files in the VS Code terminal using:
+Quickly run batch *(.bat / .cmd / .btm)* files in the VS Code terminal using:
 
 <br>
 
