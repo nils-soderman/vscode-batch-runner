@@ -10,7 +10,7 @@ If the active document is a .bat file, press <kbd>F5</kbd> to execute it.
 <br>
 
 ### Right Click Menu
-This extension adds the option "Run Batch File in Terminal" when right clicking any batch file in the explorer.
+This extension adds the option "Run Batch File" when right clicking any batch file in the explorer.
 
 ![Context menu option: "Run Batch File in Terminal"](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-context-menu.jpg?raw=true)
 
