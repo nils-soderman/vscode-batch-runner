@@ -89,9 +89,10 @@
 							"Open the batch files in an external cmd window"
 						],
 						"default": "Terminal",
-						"description": "Where the batch file should be executed"
+						"description": "Where the batch file should be executed",
+						"scope": "resource"
 					},
-					"batchrunner.cmdPath" : {
+					"batchrunner.cmdPath": {
 						"type": "string",
 						"default": "C:\\windows\\System32\\cmd.exe",
 						"description": "Path to where 'cmd.exe' is located"

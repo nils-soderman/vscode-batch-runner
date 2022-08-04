@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.0.7
+(xx-08-2022)
+
+- Updated configuration `batchrunner.runBatchIn` scope to be at "resource" level
+
+
 ## v0.0.6
 (31-07-2022)
 
