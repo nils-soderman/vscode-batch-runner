@@ -94,17 +94,23 @@ function runBatchFileInTerminal(filepath: string) {
 /**
  * Open a batch file in cmd
  * @param filepath Absolute filepath to the batch file
+ * @param bAdmin Run the batch file with admin privileges
  */
-function runBatchFileInCmd(filepath: string) {
+function runBatchFileInCmd(filepath: string, bAdmin = false) {
     const cmdPath = getCmdPath();
     if (!cmdPath) {
         return false;
     }
 
     const directory = path.dirname(filepath);
-    
+
     // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters
-    const command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
+    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
+    if (bAdmin) {
+        // If we want to launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs
+        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
+    }
+
     child_process.exec(command);
 
     return true;
