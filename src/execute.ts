@@ -38,15 +38,10 @@ function runBatchFileInTerminal(filepath: string) {
         return false;
     }
 
-    const cmdPath = utils.getCmdPath();
-    if (!cmdPath) {
-        return false;
-    }
-
     const directory = path.dirname(filepath);
 
     // Start with a ';' incause the previous exec stopped with a pause
-    terminal.sendText(`;cd "${directory}";&"${cmdPath}" /c "${filepath}"`, true);
+    terminal.sendText(`;cd "${directory}";&"${filepath}"`, true);
     terminal.show();
 
     return true;
