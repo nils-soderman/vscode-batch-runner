@@ -50,7 +50,7 @@
 				"title": "Run Batch File",
 				"shortTitle": "Run bat File",
 				"icon": "$(run)",
-				"enablement": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
+				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
 				"command": "batch-utils.execBatchFileAsAdmin",
@@ -58,14 +58,14 @@
 				"title": "Run Batch File as Admin",
 				"shortTitle": "Run bat file as admin",
 				"icon": "$(run-above)",
-				"enablement": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
+				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			}
 		],
 		"keybindings": [
 			{
 				"command": "batch-utils.execBatchFile",
 				"key": "F5",
-				"enablement": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported && !inDebugMode"
+				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported && !inDebugMode"
 			}
 		],
 		"menus": {
@@ -74,19 +74,19 @@
 					"command": "batch-utils.execBatchFile",
 					"alt": "batch-utils.execBatchFileAsAdmin",
 					"group": "batch",
-					"when": "resourceLangId == bat && !virtualWorkspace && shellExecutionSupported"
+					"when": "resourceLangId == bat && shellExecutionSupported"
 				}
 			],
 			"editor/title/run": [
 				{
 					"command": "batch-utils.execBatchFile",
 					"group": "batch",
-					"when": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
+					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 				},
 				{
 					"command": "batch-utils.execBatchFileAsAdmin",
 					"group": "batch",
-					"when": "resourceLangId == bat && !isInDiffEditor && !virtualWorkspace && shellExecutionSupported"
+					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 				}
 			]
 		},
@@ -116,6 +116,12 @@
 				}
 			}
 		]
+	},
+	"capabilities": {
+		"virtualWorkspaces": {
+			"supported": false,
+			"description": "Batch runner does currently not support virtual workspaces. Because it needs to have the files on disk to execute them."
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
