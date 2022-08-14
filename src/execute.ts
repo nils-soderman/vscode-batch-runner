@@ -2,49 +2,11 @@ import * as vscode from 'vscode';
 
 import * as child_process from 'child_process';
 import * as path from 'path';
-import * as fs from 'fs';
+
+import * as utils from './utils';
 
 
 const TERMINAL_NAME = "Batch Runner";
-const EXTENSION_CONFIG_NAME = "batchrunner";
-const CMD_PATH_CONFIG_KEY = "cmdPath";
-
-
-/**
- * @returns The workspace configuration for this extension _('batchrunner')_
- */
-export function getExtensionConfig() {
-    return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME);
-}
-
-
-/**
- * Get the absolute path to 'cmd.exe'  
- * Returns undefined if the file could not be located
- */
-function getCmdPath() {
-    let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
-    if (!cmdPath) {
-        // Fallback to this default path
-        cmdPath = "C:\\windows\\System32\\cmd.exe";
-    }
-
-    // Make sure the path points towards an existing file, otherwise show an error message
-    if (!fs.existsSync(cmdPath)) {
-        const browseButtonText = "Update path";
-        vscode.window.showErrorMessage(`Cmd.exe could not be located at ${cmdPath}`, browseButtonText).then(clickedItem => {
-            if (clickedItem === browseButtonText) {
-                // Open user settings and search for the cmdPath setting
-                const searchPath = `${EXTENSION_CONFIG_NAME}.${CMD_PATH_CONFIG_KEY}`;
-                vscode.commands.executeCommand('workbench.action.openSettings', searchPath);
-            }
-        });
-
-        return undefined;
-    }
-
-    return cmdPath;
-}
 
 
 /**
@@ -76,7 +38,7 @@ function runBatchFileInTerminal(filepath: string) {
         return false;
     }
 
-    const cmdPath = getCmdPath();
+    const cmdPath = utils.getCmdPath();
     if (!cmdPath) {
         return false;
     }
@@ -97,7 +59,7 @@ function runBatchFileInTerminal(filepath: string) {
  * @param bAdmin Run the batch file with admin privileges
  */
 function runBatchFileInCmd(filepath: string, bAdmin = false) {
-    const cmdPath = getCmdPath();
+    const cmdPath = utils.getCmdPath();
     if (!cmdPath) {
         return false;
     }
@@ -107,7 +69,7 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
     // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters
     let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
     if (bAdmin) {
-        // If we want to launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs
+        // To launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs argument
         command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
     }
 
@@ -121,19 +83,24 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
  * Main function to be called from the extension.ts
  * This will run the batch file taking into consideration the user's settings etc.
  * @param filepath The absolute filepath to the batch file
+ * @param bAdmin Run the batch file with admin privileges 
  * @returns true if the batch file could be exectued, otherwise false
  */
-export function runBatchFile(filepath: string) {
+export function runBatchFile(filepath: string, bAdmin = false) {
     // Check where we should run the batch file
-    const config = getExtensionConfig();
+    const config = utils.getExtensionConfig();
     const runBatchIn: string | undefined = config.get("runBatchIn");
-    
+
+    // If we want to run the batch file as admin, but VS Code is not running as admin,
+    // we need to spawn a new CMD window with admin privileges.
+    const bForceNewCmd = bAdmin && !utils.isRunningAsAdmin();
+
     // TODO: Should do an explicit check in the future. 
     // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
     // to avoid breaking it for people updating.
     // if (runBatchIn?.toLowerCase() === "External-cmd") {
-    if (runBatchIn?.toLowerCase().includes("cmd")) {
-        return runBatchFileInCmd(filepath);
+    if (runBatchIn?.toLowerCase().includes("cmd") || bForceNewCmd) {
+        return runBatchFileInCmd(filepath, bAdmin);
     }
     else {
         return runBatchFileInTerminal(filepath);
