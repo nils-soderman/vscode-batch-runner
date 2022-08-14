@@ -9,6 +9,8 @@
 
 - Updated configuration scope of `batchrunner.runBatchIn` to be at "resource" level
 
+- Updated configuration scope of `batchrunner.cmdPath` to be at "machine" level
+
 
 ## v0.0.6
 (31-07-2022)

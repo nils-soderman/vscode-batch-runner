@@ -111,7 +111,8 @@
 					"batchrunner.cmdPath": {
 						"type": "string",
 						"default": "C:\\windows\\System32\\cmd.exe",
-						"description": "Path to where 'cmd.exe' is located"
+						"description": "Path to where 'cmd.exe' is located",
+						"scope": "machine"
 					}
 				}
 			}
