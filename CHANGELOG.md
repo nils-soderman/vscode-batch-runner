@@ -1,9 +1,11 @@
 # Change Log
 
 ## v0.0.7
-(xx-08-2022)
+(14-08-2022)
 
-- Updated configuration `batchrunner.runBatchIn` scope to be at "resource" level
+- Added command `batch-utils.execBatchFileAsAdmin` that will run the batch file with admin privileges.
+
+- Updated configuration scope of `batchrunner.runBatchIn` to be at "resource" level
 
 
 ## v0.0.6
