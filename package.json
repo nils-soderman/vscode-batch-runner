@@ -72,8 +72,9 @@
 			"explorer/context": [
 				{
 					"command": "batch-utils.execBatchFile",
+					"alt": "batch-utils.execBatchFileAsAdmin",
 					"group": "batch",
-					"alt": "batch-utils.execBatchFileAsAdmin"
+					"when": "resourceLangId == bat && !virtualWorkspace && shellExecutionSupported"
 				}
 			],
 			"editor/title/run": [

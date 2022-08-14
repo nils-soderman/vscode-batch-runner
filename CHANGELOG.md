@@ -5,6 +5,8 @@
 
 - Added command `batch-utils.execBatchFileAsAdmin` that will run the batch file with admin privileges.
 
+- Fixed "Run Batch File" showing up in context menu even for non batch files
+
 - Updated configuration scope of `batchrunner.runBatchIn` to be at "resource" level
 
 
