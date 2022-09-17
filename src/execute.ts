@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as utils from './utils';
 
 
-const TERMINAL_NAME = "Batch Runner";
+const TERMINAL_NAME = "Batch Runner Terminal";
 
 
 /**
