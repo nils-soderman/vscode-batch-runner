@@ -22,7 +22,8 @@ function getBatchRunnerTerminal(bEnsureExists = true) {
     }
 
     if (bEnsureExists) {
-        return vscode.window.createTerminal(TERMINAL_NAME);
+        const cmdPath = utils.getCmdPath();
+        return vscode.window.createTerminal(TERMINAL_NAME, cmdPath);
     }
 }
 
@@ -41,7 +42,8 @@ function runBatchFileInTerminal(filepath: string) {
     const directory = path.dirname(filepath);
 
     // Start with a ';' incause the previous exec stopped with a pause
-    terminal.sendText(`;cd "${directory}";&"${filepath}"`, true);
+    const command = `cls & cls & cd "${directory}" & "${filepath}"`;
+    terminal.sendText(command, true);
     terminal.show();
 
     return true;
