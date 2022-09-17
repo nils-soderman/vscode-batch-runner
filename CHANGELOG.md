@@ -1,5 +1,14 @@
 # Change Log
 
+## v0.0.8
+(17-09-2022)
+
+- The Batch Runner terminal now uses **cmd.exe** based on the cmd path given in the config `batchrunner.cmdPath`
+
+- Added the execute commands to the `editor/title/context` menu
+
+- Renamed *"Run Batch File as Admin"* to *"Run Batch File as Administrator"*
+
 ## v0.0.7
 (14-08-2022)
 
