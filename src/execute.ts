@@ -41,8 +41,8 @@ function runBatchFileInTerminal(filepath: string) {
 
     const directory = path.dirname(filepath);
 
-    // Start with a ';' incause the previous exec stopped with a pause
-    const command = `cls & cls & cd "${directory}" & "${filepath}"`;
+    // Start with an extra empty command `cd`, incase the previous exec stopped with a pause
+    const command = `cd & cls & cd "${directory}" & "${filepath}"`;
     terminal.sendText(command, true);
     terminal.show();
 
