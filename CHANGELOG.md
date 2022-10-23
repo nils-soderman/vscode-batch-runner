@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.0
+(23-10-2022)
+
+### Fixed:
+- Configs not read correctly from the folder settings
+
+
 ## v0.0.8
 (17-09-2022)
 

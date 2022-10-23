@@ -3,7 +3,7 @@
 	"displayName": "Batch Runner",
 	"publisher": "NilsSoderman",
 	"description": "Execute batch files in the VS Code terminal",
-	"version": "0.0.8",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.64.0"
 	},

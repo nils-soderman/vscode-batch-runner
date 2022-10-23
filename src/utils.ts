@@ -9,10 +9,20 @@ const CMD_PATH_CONFIG_KEY = "cmdPath";
 
 
 /**
+ * @param filepath If provided it'll use the file's workspace folder as scope, otherwise it'll try to get the current active filepath.
  * @returns The workspace configuration for this extension _('batchrunner')_
  */
-export function getExtensionConfig() {
-    return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME);
+export function getExtensionConfig(filepath?: string) {
+    // Try to get the active workspace folder first, to have it read Folder Settings
+    let workspaceFolder;
+    if (filepath) {
+        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(filepath));
+    }
+    else if (vscode.window.activeTextEditor) {
+        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.window.activeTextEditor.document.uri);
+    }
+
+    return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME, workspaceFolder);
 }
 
 /**
