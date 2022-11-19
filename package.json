@@ -124,6 +124,12 @@
 					}
 				}
 			}
+		],
+		"languages": [
+			{
+				"id": "bat",
+        		"extensions": [".btm"]
+			}
 		]
 	},
 	"capabilities": {
