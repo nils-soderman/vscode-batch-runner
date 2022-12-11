@@ -1,6 +1,6 @@
 # Batch Runner
 
-Quickly run batch *(.bat / .cmd / .btm)* files in the VS Code terminal:
+Quickly run batch *(.bat / .cmd)* files in the VS Code terminal:
 
 <br>
 
@@ -8,7 +8,7 @@ Quickly run batch *(.bat / .cmd / .btm)* files in the VS Code terminal:
 
 <br>
 
-# Ways to execute a batch file
+# Executing a batch file
 
 ### Hotkey
 If the active document is a batch file, press <kbd>F5</kbd> to execute it.

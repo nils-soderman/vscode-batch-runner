@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.1
+(11-12-2022)
+
+### Removed:
+- Incorrect indications that this extension officially supports .BTM files
+
+
 ## v1.0.0
 (23-10-2022)
 
