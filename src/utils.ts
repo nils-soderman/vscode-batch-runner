@@ -2,7 +2,6 @@ import * as vscode from 'vscode';
 
 import * as child_process from 'child_process';
 import * as fs from 'fs';
-import * as path from 'path';
 
 
 const EXTENSION_CONFIG_NAME = "batchrunner";
@@ -26,7 +25,6 @@ export function getExtensionConfig(filepath?: string) {
     return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME, workspaceFolder);
 }
 
-
 /**
  * Check if user is running VS Code as admin
  */
@@ -40,22 +38,11 @@ export function isRunningAsAdmin() {
     }
 }
 
-
-export function isBtmFile(filepath: string) {
-    return filepath.toLowerCase().endsWith(".btm");
-}
-
-
-function openSettings(config: string) {
-    vscode.commands.executeCommand('workbench.action.openSettings', config);
-}
-
-
 /**
  * Get the absolute path to 'cmd.exe'  
  * Returns undefined if the file could not be located
  */
-function getCmdPath() {
+export function getCmdPath() {
     let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
     if (!cmdPath) {
         // Fallback to this default path
@@ -64,10 +51,12 @@ function getCmdPath() {
 
     // Make sure the path points towards an existing file, otherwise show an error message
     if (!fs.existsSync(cmdPath)) {
-        vscode.window.showErrorMessage(`Cmd.exe could not be located at ${cmdPath}`, "Update path").then(clickedItem => {
-            if (clickedItem === "Update path") {
+        const browseButtonText = "Update path";
+        vscode.window.showErrorMessage(`Cmd.exe could not be located at ${cmdPath}`, browseButtonText).then(clickedItem => {
+            if (clickedItem === browseButtonText) {
                 // Open user settings and search for the cmdPath setting
-                openSettings(`${EXTENSION_CONFIG_NAME}.${CMD_PATH_CONFIG_KEY}`);
+                const searchPath = `${EXTENSION_CONFIG_NAME}.${CMD_PATH_CONFIG_KEY}`;
+                vscode.commands.executeCommand('workbench.action.openSettings', searchPath);
             }
         });
 
@@ -75,44 +64,4 @@ function getCmdPath() {
     }
 
     return cmdPath;
-}
-
-
-export function getExecutablePath(filepath: string) {
-    if (isBtmFile(filepath)) {
-        const configKey = "btmExecutable";
-
-        let btmExecutablePath: string | undefined = getExtensionConfig().get(configKey);
-        if (btmExecutablePath && fs.existsSync(btmExecutablePath)) {
-            return btmExecutablePath;
-        }
-
-        // Browse to TCC
-        const message = btmExecutablePath ? `Executable could not be found: ${btmExecutablePath}` : "No program selected to execute .btm files"; 
-        vscode.window.showErrorMessage(message, "Browse", "Open Settings").then(clickedItem => {
-            if (clickedItem === "Browse") {
-                vscode.window.showOpenDialog({
-                    "canSelectMany": false,
-                    "filters": {
-                        "executable": ["exe"]
-                    },
-                    "title": "Select a executable to use for .BTM files",
-                    "openLabel": "Select executable for .BTM files"
-                }).then(value => {
-                    if (value) {
-                        const extConfig = getExtensionConfig();
-                        extConfig.update(configKey, value[0].fsPath, vscode.ConfigurationTarget.Global);
-                    }
-                });
-            }
-
-            else if (clickedItem === "Open Settings") {
-                openSettings(`${EXTENSION_CONFIG_NAME}.${configKey}`);
-            }
-        });
-
-        return;
-    }
-
-    return getCmdPath();
 }

@@ -14,32 +14,16 @@ const TERMINAL_NAME = "Batch Runner Terminal";
  * @param bEnsureExists If terminal doesn't exist, create it
  * @returns The terminal if one could be found/created
  */
-function getBatchRunnerTerminal(filepath: string, bEnsureExists = true) {
-    const terminalName = TERMINAL_NAME;
-    const executablePath = utils.getExecutablePath(filepath);
-
+function getBatchRunnerTerminal(bEnsureExists = true) {
     for (const terminal of vscode.window.terminals) {
-        if (terminal.name === terminalName) {
-            
-            // @ts-ignore
-            const shellPath = terminal.creationOptions["shellPath"];
-            if (shellPath) {
-                if (shellPath === executablePath) {
-                    return terminal;
-                }
-                terminal.dispose();
-            }
-            else {
-                return terminal;
-            }
-
+        if (terminal.name === TERMINAL_NAME) {
+            return terminal;
         }
     }
-    
+
     if (bEnsureExists) {
-        if (executablePath) {
-            return vscode.window.createTerminal(terminalName, executablePath);
-        }
+        const cmdPath = utils.getCmdPath();
+        return vscode.window.createTerminal(TERMINAL_NAME, cmdPath);
     }
 }
 
@@ -50,7 +34,7 @@ function getBatchRunnerTerminal(filepath: string, bEnsureExists = true) {
  * @returns true if the batch file was executed
  */
 function runBatchFileInTerminal(filepath: string) {
-    const terminal = getBatchRunnerTerminal(filepath);
+    const terminal = getBatchRunnerTerminal();
     if (!terminal) {
         return false;
     }
@@ -72,7 +56,7 @@ function runBatchFileInTerminal(filepath: string) {
  * @param bAdmin Run the batch file with admin privileges
  */
 function runBatchFileInCmd(filepath: string, bAdmin = false) {
-    const cmdPath = utils.getExecutablePath(filepath);
+    const cmdPath = utils.getCmdPath();
     if (!cmdPath) {
         return false;
     }
@@ -102,7 +86,6 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
 export function runBatchFile(filepath: string, bAdmin = false) {
     // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
-
     const runBatchIn: string | undefined = config.get("runBatchIn");
 
     // If we want to run the batch file as admin, but VS Code is not running as admin,
@@ -112,7 +95,7 @@ export function runBatchFile(filepath: string, bAdmin = false) {
     // TODO: Should do an explicit check in the future. 
     // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
     // to avoid breaking it for people updating.
-    // if (runBatchIn === "External-cmd" || bForceNewCmd) {
+    // if (runBatchIn?.toLowerCase() === "External-cmd") {
     if (runBatchIn?.toLowerCase().includes("cmd") || bForceNewCmd) {
         return runBatchFileInCmd(filepath, bAdmin);
     }
