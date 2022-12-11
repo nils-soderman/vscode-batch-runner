@@ -3,7 +3,8 @@
         "out": true,
         "node_modules" : true,
         "LICENSE": true,
-        "**/**.vsix": true
+        "**/**.vsix": true,
+        "builds": true
     },
     "search.exclude": {
         "out": true,
