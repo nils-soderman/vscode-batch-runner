@@ -5,7 +5,7 @@
 	"description": "Execute batch files in the VS Code terminal",
 	"version": "1.0.1",
 	"engines": {
-		"vscode": "^1.64.0"
+		"vscode": "^1.74.0"
 	},
 	"icon": "media/icon.png",
 	"qna": "marketplace",
@@ -35,10 +35,6 @@
 		"name": "Nils Söderman",
 		"url": "https://nilssoderman.com"
 	},
-	"activationEvents": [
-		"onCommand:batch-utils.execBatchFile",
-		"onCommand:batch-utils.execBatchFileAsAdmin"
-	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
