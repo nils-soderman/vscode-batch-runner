@@ -51,4 +51,3 @@ If you have any questions, feature requests or run into any bugs, don't hesitate
 
 [Report an issue](https://github.com/nils-soderman/vscode-batch-runner/issues "Report a bug on the GitHub repository")<br>
 [Personal Website](https://nilssoderman.com)<br>
-[Twitter](https://twitter.com/nilssoderman "@nilssoderman")
