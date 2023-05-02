@@ -42,7 +42,7 @@ function runBatchFileInTerminal(filepath: string, args: string[] = []) {
     const directory = path.dirname(filepath);
 
     // Start with an extra empty command `cd`, incase the previous exec stopped with a pause
-    const command = `cd & cls & cd "${directory}" & "${filepath}"`;
+    const command = `cd & cls & cd "${directory}" & "${filepath}" ${args.join(" ")}`;
     terminal.sendText(command, true);
     terminal.show();
 
@@ -63,11 +63,13 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
 
     const directory = path.dirname(filepath);
 
-    // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters
-    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
+    // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters    
+    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c ""${filepath}" ${args.join(" ")}"`;
     if (bAdmin) {
         // To launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs argument
-        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
+        
+        // TODO: Arguments using quotes (e.g. "key=value") will lose the quotes when running as admin
+        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}""", """${args.join(" ")}"""`;
     }
 
     child_process.exec(command);
