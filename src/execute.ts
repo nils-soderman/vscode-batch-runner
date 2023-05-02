@@ -33,7 +33,7 @@ function getBatchRunnerTerminal(bEnsureExists = true) {
  * @param filepath Absolute filepath to the .bat file
  * @returns true if the batch file was executed
  */
-function runBatchFileInTerminal(filepath: string) {
+function runBatchFileInTerminal(filepath: string, args: string[] = []) {
     const terminal = getBatchRunnerTerminal();
     if (!terminal) {
         return false;
@@ -55,7 +55,7 @@ function runBatchFileInTerminal(filepath: string) {
  * @param filepath Absolute filepath to the batch file
  * @param bAdmin Run the batch file with admin privileges
  */
-function runBatchFileInCmd(filepath: string, bAdmin = false) {
+function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false) {
     const cmdPath = utils.getCmdPath();
     if (!cmdPath) {
         return false;
@@ -83,7 +83,7 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
  * @param bAdmin Run the batch file with admin privileges 
  * @returns true if the batch file could be exectued, otherwise false
  */
-export function runBatchFile(filepath: string, bAdmin = false) {
+export function runBatchFile(filepath: string, args: string[] = [], bAdmin = false) {
     // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
     const runBatchIn: string | undefined = config.get("runBatchIn");
@@ -97,9 +97,9 @@ export function runBatchFile(filepath: string, bAdmin = false) {
     // to avoid breaking it for people updating.
     // if (runBatchIn?.toLowerCase() === "External-cmd") {
     if (runBatchIn?.toLowerCase().includes("cmd") || bForceNewCmd) {
-        return runBatchFileInCmd(filepath, bAdmin);
+        return runBatchFileInCmd(filepath, args, bAdmin);
     }
     else {
-        return runBatchFileInTerminal(filepath);
+        return runBatchFileInTerminal(filepath, args);
     }
 }

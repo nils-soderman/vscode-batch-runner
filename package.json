@@ -47,7 +47,7 @@
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
-				"command": "batch-utils.execBatchFileWithArguments",
+				"command": "batch-utils.execBatchFileArgs",
 				"category": "Batch Runner",
 				"title": "Run Batch File With Arguments",
 				"shortTitle": "Run bat File With Args",

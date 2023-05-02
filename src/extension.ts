@@ -9,7 +9,17 @@ export function activate(context: vscode.ExtensionContext) {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
-				execute.runBatchFile(filepath, false);
+				execute.runBatchFile(filepath, [], false);
+			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('batch-utils.execBatchFileArgs', (args) => {
+			let filepath = getFilepath(args);
+
+			if (filepath) {
+				execute.runBatchFile(filepath, [], false);
 			}
 		})
 	);
@@ -19,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 			let filepath = getFilepath(args);
 			
 			if (filepath) {
-				execute.runBatchFile(filepath, true);
+				execute.runBatchFile(filepath, [], true);
 			}
 		})
 	);
