@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 
 import * as execute from './execute';
+import * as batchArgs from './arguments';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -15,11 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-utils.execBatchFileArgs', (args) => {
+		vscode.commands.registerCommand('batch-utils.execBatchFileArgs', async (args) => {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
-				execute.runBatchFile(filepath, [], false);
+				execute.runBatchFile(filepath, await batchArgs.getArguments(), false);
 			}
 		})
 	);
