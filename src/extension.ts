@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
-				execute.runBatchFile(filepath, await batchArgs.getArguments(), false);
+				execute.runBatchFile(filepath, await batchArgs.askForArguments(filepath), false);
 			}
 		})
 	);
