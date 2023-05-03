@@ -69,36 +69,3 @@ export function getCmdPath() {
 
     return cmdPath;
 }
-
-/**
- * Get the absolute path to the extension's data folder ('%APPDATA%/VSCode-Batch-Runner')
- * @param bEnsureExists If true, the folder will be created if it doesn't exist
- */
-export function getExtensionAppdataDirectory(bEnsureExists = true) {
-    let configDir: string | undefined;
-    if (process.platform === 'win32') {
-        // Windows
-        configDir = process.env.APPDATA;
-    }
-    else if (process.platform === 'darwin') {
-        // Mac OS
-        configDir = path.join(os.homedir(), 'Library');
-    }
-    else {
-        // Linux
-        configDir = path.join(process.env.XDG_CONFIG_HOME || path.join(os.homedir(), '.config'));
-    }
-
-    if (!configDir) {
-        return;
-    }
-
-    configDir = path.join(configDir, DATA_FOLDER_NAME);
-
-    // Create folder if it doesn't exists
-    if (bEnsureExists && !fs.existsSync(configDir)) {
-        fs.mkdirSync(configDir);
-    }
-
-    return configDir;
-}
