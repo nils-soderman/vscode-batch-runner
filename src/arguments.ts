@@ -10,7 +10,7 @@ interface ICachedArgs {
 let cachedArgs: ICachedArgs = {};
 
 
-export async function askForArguments(filepath?: string): Promise<string[]> {
+export async function askForArguments(filepath?: string): Promise<string[] | undefined> {
     const cachedArg = filepath ? getCachedArgument(filepath) : "";
 
     const argString = await vscode.window.showInputBox({
@@ -18,6 +18,10 @@ export async function askForArguments(filepath?: string): Promise<string[]> {
         prompt: "Arguments to pass to the batch file",
         value: cachedArg,
     });
+
+    if (argString === undefined) {
+        return undefined;
+    }
 
     if (!argString) {
         return [];
