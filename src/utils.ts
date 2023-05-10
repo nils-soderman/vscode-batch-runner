@@ -8,7 +8,8 @@ import * as os from 'os';
 
 const DATA_FOLDER_NAME = "VSCode-Batch-Runner";
 
-const EXTENSION_CONFIG_NAME = "batchrunner";
+const EXTENSION_CONFIG_NAME = "batch-runner";
+const EXTENSION_CONFIG_NAME_OLD = "batchrunner";
 const CMD_PATH_CONFIG_KEY = "cmdPath";
 
 
@@ -16,7 +17,7 @@ const CMD_PATH_CONFIG_KEY = "cmdPath";
  * @param filepath If provided it'll use the file's workspace folder as scope, otherwise it'll try to get the current active filepath.
  * @returns The workspace configuration for this extension _('batchrunner')_
  */
-export function getExtensionConfig(filepath?: string) {
+export function getExtensionConfig(filepath?: string, old = false) {
     // Try to get the active workspace folder first, to have it read Folder Settings
     let workspaceFolder;
     if (filepath) {
@@ -26,7 +27,8 @@ export function getExtensionConfig(filepath?: string) {
         workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.window.activeTextEditor.document.uri);
     }
 
-    return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME, workspaceFolder);
+    // TODO: Remove this old option in a future release
+    return vscode.workspace.getConfiguration(old ? EXTENSION_CONFIG_NAME_OLD : EXTENSION_CONFIG_NAME, workspaceFolder);
 }
 
 /**
@@ -48,6 +50,13 @@ export function isRunningAsAdmin() {
  */
 export function getCmdPath() {
     let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
+    
+    // TODO: Remove this old check in a future release
+    const oldCmdPathConfig: string | undefined = getExtensionConfig(undefined, true).get(CMD_PATH_CONFIG_KEY);
+    if (oldCmdPathConfig) {
+        cmdPath = oldCmdPathConfig;
+    }
+
     if (!cmdPath) {
         // Fallback to this default path
         cmdPath = "C:\\windows\\System32\\cmd.exe";

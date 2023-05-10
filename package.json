@@ -119,7 +119,7 @@
 			{
 				"title": "Batch Runner",
 				"properties": {
-					"batchrunner.runBatchIn": {
+					"batch-runner.runBatchIn": {
 						"type": "string",
 						"enum": [
 							"Terminal",
@@ -133,11 +133,23 @@
 						"description": "Where the batch file should be executed",
 						"scope": "resource"
 					},
-					"batchrunner.cmdPath": {
+					"batch-runner.cmdPath": {
 						"type": "string",
 						"default": "C:\\windows\\System32\\cmd.exe",
 						"description": "Path to where 'cmd.exe' is located",
 						"scope": "machine"
+					},
+					"batchrunner.runBatchIn": {
+						"type": "string",
+						"default": "",
+						"scope": "resource",
+						"deprecationMessage": "Use \"batch-runner.runBatchIn\" instead. This setting will be removed in a future release."
+					},
+					"batchrunner.cmdPath": {
+						"type": "string",
+						"default": "",
+						"scope": "machine",
+						"deprecationMessage": "Use \"batch-runner.cmdPath\" instead. This setting will be removed in a future release."
 					}
 				}
 			}

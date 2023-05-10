@@ -88,7 +88,13 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
 export function runBatchFile(filepath: string, args: string[] = [], bAdmin = false) {
     // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
-    const runBatchIn: string | undefined = config.get("runBatchIn");
+    let runBatchIn: string | undefined = config.get("runBatchIn");
+
+    // TODO: Remove this in the future.
+    const oldCmdPathConfig: string | undefined = utils.getExtensionConfig(undefined, true).get("runBatchIn");
+    if (oldCmdPathConfig) {
+        runBatchIn = oldCmdPathConfig;
+    }
 
     // If we want to run the batch file as admin, but VS Code is not running as admin,
     // we need to spawn a new CMD window with admin privileges.

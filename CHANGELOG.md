@@ -6,6 +6,8 @@
 ### Added:
 - Command `batch-utils.execBatchFileArgs` that will first spawn a input box where you can enter the arguments to pass to the batch file.
 
+### Changed:
+- Renamed configs `batchrunner.cmdPath` & `batchrunner.runBatchIn` -> `batch-runner.cmdPath` & `batch-runner.runBatchIn` and deprecated the old configuration names.
 
 ## 1.0.1
 (11-12-2022)
