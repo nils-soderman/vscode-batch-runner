@@ -33,7 +33,7 @@ function getBatchRunnerTerminal(bEnsureExists = true) {
  * @param filepath Absolute filepath to the .bat file
  * @returns true if the batch file was executed
  */
-function runBatchFileInTerminal(filepath: string) {
+function runBatchFileInTerminal(filepath: string, args: string[] = []) {
     const terminal = getBatchRunnerTerminal();
     if (!terminal) {
         return false;
@@ -42,7 +42,7 @@ function runBatchFileInTerminal(filepath: string) {
     const directory = path.dirname(filepath);
 
     // Start with an extra empty command `cd`, incase the previous exec stopped with a pause
-    const command = `cd & cls & cd "${directory}" & "${filepath}"`;
+    const command = `cd & cls & cd "${directory}" & "${filepath}" ${args.join(" ")}`;
     terminal.sendText(command, true);
     terminal.show();
 
@@ -55,7 +55,7 @@ function runBatchFileInTerminal(filepath: string) {
  * @param filepath Absolute filepath to the batch file
  * @param bAdmin Run the batch file with admin privileges
  */
-function runBatchFileInCmd(filepath: string, bAdmin = false) {
+function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false) {
     const cmdPath = utils.getCmdPath();
     if (!cmdPath) {
         return false;
@@ -63,11 +63,13 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
 
     const directory = path.dirname(filepath);
 
-    // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters
-    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c "${filepath}"`;
+    // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters    
+    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c ""${filepath}" ${args.join(" ")}"`;
     if (bAdmin) {
         // To launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs argument
-        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
+
+        // TODO: Arguments using quotes (e.g. "key=value") will lose the quotes when running as admin
+        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}""", """${args.join(" ")}"""`;
     }
 
     child_process.exec(command);
@@ -83,10 +85,16 @@ function runBatchFileInCmd(filepath: string, bAdmin = false) {
  * @param bAdmin Run the batch file with admin privileges 
  * @returns true if the batch file could be exectued, otherwise false
  */
-export function runBatchFile(filepath: string, bAdmin = false) {
+export function runBatchFile(filepath: string, args: string[] = [], bAdmin = false) {
     // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
-    const runBatchIn: string | undefined = config.get("runBatchIn");
+    let runBatchIn: string | undefined = config.get("runBatchIn");
+
+    // TODO: Remove this in the future.
+    const oldCmdPathConfig: string | undefined = utils.getExtensionConfig(undefined, true).get("runBatchIn");
+    if (oldCmdPathConfig) {
+        runBatchIn = oldCmdPathConfig;
+    }
 
     // If we want to run the batch file as admin, but VS Code is not running as admin,
     // we need to spawn a new CMD window with admin privileges.
@@ -97,9 +105,9 @@ export function runBatchFile(filepath: string, bAdmin = false) {
     // to avoid breaking it for people updating.
     // if (runBatchIn?.toLowerCase() === "External-cmd") {
     if (runBatchIn?.toLowerCase().includes("cmd") || bForceNewCmd) {
-        return runBatchFileInCmd(filepath, bAdmin);
+        return runBatchFileInCmd(filepath, args, bAdmin);
     }
     else {
-        return runBatchFileInTerminal(filepath);
+        return runBatchFileInTerminal(filepath, args);
     }
 }
