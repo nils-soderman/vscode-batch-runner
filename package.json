@@ -49,9 +49,9 @@
 			{
 				"command": "batch-utils.execBatchFileArgs",
 				"category": "Batch Runner",
-				"title": "Run Batch File With Arguments",
-				"shortTitle": "Run bat File With Args",
-				"icon": "$(run)",
+				"title": "Run Batch File with Arguments",
+				"shortTitle": "Run bat File w/ Args",
+				"icon": "$(debug-coverage)",
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
@@ -77,12 +77,22 @@
 					"alt": "batch-utils.execBatchFileAsAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
+				},
+				{
+					"command": "batch-utils.execBatchFileArgs",
+					"group": "batch",
+					"when": "resourceLangId == bat && shellExecutionSupported"
 				}
 			],
 			"editor/title/context": [
 				{
 					"command": "batch-utils.execBatchFile",
 					"alt": "batch-utils.execBatchFileAsAdmin",
+					"group": "batch",
+					"when": "resourceLangId == bat && shellExecutionSupported"
+				},
+				{
+					"command": "batch-utils.execBatchFileArgs",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				}
@@ -92,6 +102,11 @@
 					"command": "batch-utils.execBatchFile",
 					"group": "batch",
 					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
+				},
+				{
+					"command": "batch-utils.execBatchFileArgs",
+					"group": "batch",
+					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
 				{
 					"command": "batch-utils.execBatchFileAsAdmin",
