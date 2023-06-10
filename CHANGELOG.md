@@ -1,7 +1,7 @@
 # Change Log
 
 ## 1.1.0
-(x-05-2023)
+(10-06-2023)
 
 ### Added:
 - Command `batch-utils.execBatchFileArgs` that will first spawn a input box where you can enter the arguments to pass to the batch file.
