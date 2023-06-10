@@ -67,9 +67,12 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
     let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c ""${filepath}" ${args.join(" ")}"`;
     if (bAdmin) {
         // To launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs argument
+        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
+        if (args.length > 0) {
+            // TODO: Arguments using quotes (e.g. "key=value") will lose the quotes when running as admin
+            command += `, """${args.join(" ")}"""`;
+        }
 
-        // TODO: Arguments using quotes (e.g. "key=value") will lose the quotes when running as admin
-        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}""", """${args.join(" ")}"""`;
     }
 
     child_process.exec(command);
@@ -104,7 +107,7 @@ export function runBatchFile(filepath: string, args: string[] = [], bAdmin = fal
     // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
     // to avoid breaking it for people updating.
     // if (runBatchIn?.toLowerCase() === "External-cmd") {
-    if (runBatchIn?.toLowerCase().includes("cmd") || bForceNewCmd) {
+    if (bForceNewCmd || runBatchIn?.toLowerCase().includes("cmd")) {
         return runBatchFileInCmd(filepath, args, bAdmin);
     }
     else {
