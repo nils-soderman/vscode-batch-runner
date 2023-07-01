@@ -12,18 +12,28 @@ const TERMINAL_NAME = "Batch Runner Terminal";
 /**
  * Get the 'Batch Runner' terminal used by this extension
  * @param bEnsureExists If terminal doesn't exist, create it
+ * @param bRefresh If terminal exists, dispose and create a new one
  * @returns The terminal if one could be found/created
  */
-function getBatchRunnerTerminal(bEnsureExists = true) {
+function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true) {
+    const createTerminal = () => {
+        const cmdPath = utils.getCmdPath();
+        return vscode.window.createTerminal(TERMINAL_NAME, cmdPath);
+    };
+
     for (const terminal of vscode.window.terminals) {
         if (terminal.name === TERMINAL_NAME) {
+            if (bRefresh) {
+                terminal.dispose();
+                return createTerminal();
+            }
+
             return terminal;
         }
     }
 
     if (bEnsureExists) {
-        const cmdPath = utils.getCmdPath();
-        return vscode.window.createTerminal(TERMINAL_NAME, cmdPath);
+        return createTerminal();
     }
 }
 
@@ -41,8 +51,7 @@ function runBatchFileInTerminal(filepath: string, args: string[] = []) {
 
     const directory = path.dirname(filepath);
 
-    // Start with an extra empty command `cd`, incase the previous exec stopped with a pause
-    const command = `cd & cls & cd "${directory}" & "${filepath}" ${args.join(" ")}`;
+    const command = `cls & cd "${directory}" & "${filepath}" ${args.join(" ")}`;
     terminal.sendText(command, true);
     terminal.show();
 
