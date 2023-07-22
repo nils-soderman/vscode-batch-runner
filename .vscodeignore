@@ -1,19 +1,17 @@
+.github
+
 .vscode/**
 .vscode-test/**
 out/test/**
 
-tests/**
+test/**
+
 src/**
 .gitignore
 .yarnrc
-vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
 **/*.map
 **/*.ts
 
-build-scripts
-
-test.bat
 media/demo
-builds
