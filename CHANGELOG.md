@@ -1,9 +1,9 @@
 # Change Log
 
-## [1.1.2] - 2023-XX-XX
+## [1.1.2] - 2023-07-23
 
 ### Changed
-- Use esbuild to bundle & minify the compiled code.
+- Use esbuild to bundle & minify the compiled code
 
 ## [1.1.1] - 2023-07-01
 
