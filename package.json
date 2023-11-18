@@ -39,7 +39,7 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "batch-utils.execBatchFile",
+				"command": "batch-runner.execBatchFile",
 				"category": "Batch Runner",
 				"title": "Run Batch File",
 				"shortTitle": "Run bat File",
@@ -47,7 +47,7 @@
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
-				"command": "batch-utils.execBatchFileArgs",
+				"command": "batch-runner.execBatchFileArgs",
 				"category": "Batch Runner",
 				"title": "Run Batch File with Arguments",
 				"shortTitle": "Run bat File w/ Args",
@@ -55,7 +55,7 @@
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
-				"command": "batch-utils.execBatchFileAsAdmin",
+				"command": "batch-runner.execBatchFileAsAdmin",
 				"category": "Batch Runner",
 				"title": "Run Batch File as Administrator",
 				"shortTitle": "Run bat file as admin",
@@ -65,7 +65,7 @@
 		],
 		"keybindings": [
 			{
-				"command": "batch-utils.execBatchFile",
+				"command": "batch-runner.execBatchFile",
 				"key": "F5",
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported && !inDebugMode"
 			}
@@ -73,43 +73,43 @@
 		"menus": {
 			"explorer/context": [
 				{
-					"command": "batch-utils.execBatchFile",
-					"alt": "batch-utils.execBatchFileAsAdmin",
+					"command": "batch-runner.execBatchFile",
+					"alt": "batch-runner.execBatchFileAsAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
 				{
-					"command": "batch-utils.execBatchFileArgs",
+					"command": "batch-runner.execBatchFileArgs",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				}
 			],
 			"editor/title/context": [
 				{
-					"command": "batch-utils.execBatchFile",
-					"alt": "batch-utils.execBatchFileAsAdmin",
+					"command": "batch-runner.execBatchFile",
+					"alt": "batch-runner.execBatchFileAsAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
 				{
-					"command": "batch-utils.execBatchFileArgs",
+					"command": "batch-runner.execBatchFileArgs",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				}
 			],
 			"editor/title/run": [
 				{
-					"command": "batch-utils.execBatchFile",
+					"command": "batch-runner.execBatchFile",
 					"group": "batch",
 					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 				},
 				{
-					"command": "batch-utils.execBatchFileArgs",
+					"command": "batch-runner.execBatchFileArgs",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
 				{
-					"command": "batch-utils.execBatchFileAsAdmin",
+					"command": "batch-runner.execBatchFileAsAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 				}

@@ -6,7 +6,7 @@ import * as batchArgs from './arguments';
 export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-utils.execBatchFile', (args) => {
+		vscode.commands.registerCommand('batch-runner.execBatchFile', (args) => {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-utils.execBatchFileArgs', async (args) => {
+		vscode.commands.registerCommand('batch-runner.execBatchFileArgs', async (args) => {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-utils.execBatchFileAsAdmin', (args) => {
+		vscode.commands.registerCommand('batch-runner.execBatchFileAsAdmin', (args) => {
 			let filepath = getFilepath(args);
 
 			if (filepath) {

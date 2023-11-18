@@ -2,8 +2,9 @@
 
 ## [2.0.0] - UNRELEASED
 
-### Breaking changes
+### Breaking changes !
 
+- Renamed the prefix of all commands from `batch-utils` to `batch-runner`. E.g. `batch-utils.execBatchFile` -> `batch-runner.execBatchFile`.
 - Removed `batchrunner.runBatchIn` & `batchrunner.cmdPath` settings, which were deprecated in v1.1.0. Use `batch-runner.runBatchIn` & `batch-runner.cmdPath` instead.
 
 ### Added
