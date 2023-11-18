@@ -109,13 +109,14 @@ export async function runBatchFile(filepath: string, args: string[] = [], bAdmin
 
     // Check if we should save the file before running it
     const bSaveBeforeRun = config.get<boolean>("saveFileBeforeRun");
-    console.log("bSaveBeforeRun: " + bSaveBeforeRun);
     if (bSaveBeforeRun) {
+        const activeDocument = vscode.window.activeTextEditor?.document;
         if (
-            vscode.window.activeTextEditor?.document.uri.fsPath === filepath &&
-            vscode.window.activeTextEditor?.document.isDirty
+            activeDocument &&
+            utils.isPathsSame(filepath, activeDocument.uri.fsPath) &&
+            activeDocument.isDirty
         ) {
-            if (!await vscode.window.activeTextEditor?.document.save())
+            if (!await activeDocument.save())
                 return false;
         }
     }

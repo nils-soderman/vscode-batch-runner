@@ -50,7 +50,7 @@ export function isRunningAsAdmin() {
  */
 export function getCmdPath() {
     let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
-    
+
     // TODO: Remove this old check in a future release
     const oldCmdPathConfig: string | undefined = getExtensionConfig(undefined, true).get(CMD_PATH_CONFIG_KEY);
     if (oldCmdPathConfig) {
@@ -77,4 +77,11 @@ export function getCmdPath() {
     }
 
     return cmdPath;
+}
+
+/**
+ * Check if two paths are the same, ignoring case and normalizing the path
+ */
+export function isPathsSame(path1: string, path2: string) {
+    return path.normalize(path1).toLowerCase() === path.normalize(path2).toLowerCase();
 }
