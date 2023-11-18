@@ -10,7 +10,7 @@ Quickly run batch *(.bat / .cmd)* files in the VS Code terminal:
 
 # Executing a batch file
 
-### Hotkey
+### Shortcut
 If the active document is a batch file, press <kbd>F5</kbd> to execute it.
 
 <br>
@@ -24,7 +24,7 @@ This extension adds the option "Run Batch File" when right clicking any batch fi
 <br>
 
 ### Button
-When a batch file is open in the editor a small icon is added to the top right corner which can be used to execute the file.
+When a batch file is open in the editor, a small icon is added to the top right corner which can be used to execute the file.
 
 ![Button: Run Batch File](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-exec-button.jpg?raw=true)
 
