@@ -97,15 +97,27 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
  * @param bAdmin Run the batch file with admin privileges 
  * @returns true if the batch file could be exectued, otherwise false
  */
-export function runBatchFile(filepath: string, args: string[] = [], bAdmin = false) {
+export async function runBatchFile(filepath: string, args: string[] = [], bAdmin = false): Promise<boolean> {
     // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
-    let runBatchIn: string | undefined = config.get("runBatchIn");
+    let runBatchIn = config.get<string>("runBatchIn");
 
     // TODO: Remove this in the future.
     const oldCmdPathConfig: string | undefined = utils.getExtensionConfig(undefined, true).get("runBatchIn");
-    if (oldCmdPathConfig) {
+    if (oldCmdPathConfig)
         runBatchIn = oldCmdPathConfig;
+
+    // Check if we should save the file before running it
+    const bSaveBeforeRun = config.get<boolean>("saveFileBeforeRun");
+    console.log("bSaveBeforeRun: " + bSaveBeforeRun);
+    if (bSaveBeforeRun) {
+        if (
+            vscode.window.activeTextEditor?.document.uri.fsPath === filepath &&
+            vscode.window.activeTextEditor?.document.isDirty
+        ) {
+            if (!await vscode.window.activeTextEditor?.document.save())
+                return false;
+        }
     }
 
     // If we want to run the batch file as admin, but VS Code is not running as admin,
@@ -116,10 +128,8 @@ export function runBatchFile(filepath: string, args: string[] = [], bAdmin = fal
     // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
     // to avoid breaking it for people updating.
     // if (runBatchIn?.toLowerCase() === "External-cmd") {
-    if (bForceNewCmd || runBatchIn?.toLowerCase().includes("cmd")) {
+    if (bForceNewCmd || runBatchIn?.toLowerCase().includes("cmd"))
         return runBatchFileInCmd(filepath, args, bAdmin);
-    }
-    else {
+    else
         return runBatchFileInTerminal(filepath, args);
-    }
 }

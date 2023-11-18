@@ -150,6 +150,12 @@
 						"default": "",
 						"scope": "machine",
 						"deprecationMessage": "Use \"batch-runner.cmdPath\" instead. This setting will be removed in a future release."
+					},
+					"batch-runner.saveFileBeforeRun": {
+						"type": "boolean",
+						"default": false,
+						"scope": "resource",
+						"description": "Save the current batch file before running it"
 					}
 				}
 			}
