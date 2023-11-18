@@ -102,11 +102,6 @@ export async function runBatchFile(filepath: string, args: string[] = [], bAdmin
     const config = utils.getExtensionConfig(filepath);
     let runBatchIn = config.get<string>("runBatchIn");
 
-    // TODO: Remove this in the future.
-    const oldCmdPathConfig: string | undefined = utils.getExtensionConfig(undefined, true).get("runBatchIn");
-    if (oldCmdPathConfig)
-        runBatchIn = oldCmdPathConfig;
-
     // Check if we should save the file before running it
     const bSaveBeforeRun = config.get<boolean>("saveFileBeforeRun");
     if (bSaveBeforeRun) {
@@ -125,11 +120,7 @@ export async function runBatchFile(filepath: string, args: string[] = [], bAdmin
     // we need to spawn a new CMD window with admin privileges.
     const bForceNewCmd = bAdmin && !utils.isRunningAsAdmin();
 
-    // TODO: Should do an explicit check in the future. 
-    // In version 0.0.4 'External-cmd' was named 'cmd', therefore doing an "includes" check for now 
-    // to avoid breaking it for people updating.
-    // if (runBatchIn?.toLowerCase() === "External-cmd") {
-    if (bForceNewCmd || runBatchIn?.toLowerCase().includes("cmd"))
+    if (bForceNewCmd || runBatchIn === "External-cmd")
         return runBatchFileInCmd(filepath, args, bAdmin);
     else
         return runBatchFileInTerminal(filepath, args);

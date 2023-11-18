@@ -139,18 +139,6 @@
 						"description": "Path to where 'cmd.exe' is located",
 						"scope": "machine"
 					},
-					"batchrunner.runBatchIn": {
-						"type": "string",
-						"default": "",
-						"scope": "resource",
-						"deprecationMessage": "Use \"batch-runner.runBatchIn\" instead. This setting will be removed in a future release."
-					},
-					"batchrunner.cmdPath": {
-						"type": "string",
-						"default": "",
-						"scope": "machine",
-						"deprecationMessage": "Use \"batch-runner.cmdPath\" instead. This setting will be removed in a future release."
-					},
 					"batch-runner.saveFileBeforeRun": {
 						"type": "boolean",
 						"default": false,

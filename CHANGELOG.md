@@ -1,9 +1,15 @@
 # Change Log
 
-## [1.2.0] - UNRELEASED
+## [2.0.0] - UNRELEASED
+
+### Breaking changes
+
+- Removed `batchrunner.runBatchIn` & `batchrunner.cmdPath` settings, which were deprecated in v1.1.0. Use `batch-runner.runBatchIn` & `batch-runner.cmdPath` instead.
 
 ### Added
 - Setting `batch-runner.saveFileBeforeRun` which will save any edits to the current batch file before executing it. Defaults to `false` ([#14](https://github.com/nils-soderman/vscode-batch-runner/issues/14))
+
+### Removed
 
 ## [1.1.2] - 2023-07-23
 
