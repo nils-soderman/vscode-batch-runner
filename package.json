@@ -41,7 +41,7 @@
 			{
 				"command": "batch-runner.execBatchFile",
 				"category": "Batch Runner",
-				"title": "Run Batch File",
+				"title": "Run",
 				"shortTitle": "Run bat File",
 				"icon": "$(run)",
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
@@ -49,7 +49,7 @@
 			{
 				"command": "batch-runner.execBatchFileArgs",
 				"category": "Batch Runner",
-				"title": "Run Batch File with Arguments",
+				"title": "Run with Arguments",
 				"shortTitle": "Run bat File w/ Args",
 				"icon": "$(debug-coverage)",
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
@@ -57,7 +57,7 @@
 			{
 				"command": "batch-runner.execBatchFileAsAdmin",
 				"category": "Batch Runner",
-				"title": "Run Batch File as Administrator",
+				"title": "Run as Administrator",
 				"shortTitle": "Run bat file as admin",
 				"icon": "$(run-above)",
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
