@@ -4,7 +4,7 @@ Quickly run batch *(.bat / .cmd)* files in the VS Code terminal:
 
 <br>
 
-![Context menu option: "Run Batch File in Terminal"](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-exec.gif?raw=true)
+![Context menu option: "Run Batch File in Terminal"](https://raw.githubusercontent.com/nils-soderman/vscode-batch-runner/main/media/demo/demo-exec.gif)
 
 <br>
 
@@ -13,35 +13,38 @@ Quickly run batch *(.bat / .cmd)* files in the VS Code terminal:
 ### Shortcut
 If the active document is a batch file, press <kbd>F5</kbd> to execute it.
 
-<br>
-
-### Right Click Menu
+### Context Menu
 This extension adds the option "Run Batch File" when right clicking any batch file in the explorer.
 
-![Context menu option: "Run Batch File in Terminal"](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-context-menu.jpg?raw=true)
-
-
-<br>
+![Context menu option: "Run Batch File in Terminal"](https://raw.githubusercontent.com/nils-soderman/vscode-batch-runner/main/media/demo/demo-context-menu.png)
 
 ### Button
 When a batch file is open in the editor, a small icon is added to the top right corner which can be used to execute the file.
 
-![Button: Run Batch File](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-exec-button.jpg?raw=true)
+![Button: Run Batch File](https://raw.githubusercontent.com/nils-soderman/vscode-batch-runner/main/media/demo/demo-exec-button.png)
 
+<br>
+
+## Running Batch file with arguments
+
+VS Code can show a prompt where you can type in the arguments before executing the batch file.
+
+Ways to run the batch file with arguments:  
+
+* Command: *"Batch Runner: Run Batch File with Arguments"* (`batch-runner.execBatchFileArgs`)
+* In the context menu when right clicking a batch file, select *"Run Batch File with Arguments"*
+* By clicking the dropdown arrow next to the run button and selecting *"Run Batch File with Arguments"*  
+    ![Button: Run Batch File](https://raw.githubusercontent.com/nils-soderman/vscode-batch-runner/main/media/demo/demo-exec-button-args.png)
 
 <br>
 
 ## Running Batch file as administrator
 
-If you wish to run the batch file with administrator privileges there are a few ways to do so: 
+Ways to run the batch file with administrator privileges:
 
-* Command: `Run Batch File as Administrator`
-
-* Context Menu: Holding down <kbd>Alt</kbd> when right clicking a file in the explorer will provide you with the option to run the batch file as administrator.
-
-* By clicking the dropdown arrow next to the run button:
-
-    ![Button: Run Batch File](https://github.com/nils-soderman/vscode-batch-runner/blob/main/media/demo/demo-exec-button-admin.jpg?raw=true)
+* Command: *"Batch Runner: Run Batch File as Administrator"* (`batch-runner.execBatchFileAsAdmin`)
+* Holding down <kbd>Alt</kbd> when right clicking a file in the explorer will provide you with the option to run the batch file as administrator.
+* By clicking the dropdown arrow next to the run button and selecting *"Run Batch File as Administrator"*
 
 <br>
 

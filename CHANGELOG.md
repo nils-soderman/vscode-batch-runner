@@ -10,7 +10,8 @@
 ### Added
 - Setting `batch-runner.saveFileBeforeRun` which will save any edits to the current batch file before executing it. Defaults to `false` ([#14](https://github.com/nils-soderman/vscode-batch-runner/issues/14))
 
-### Removed
+### Changed
+- Updated the README.md with new images & added info regarding running a batch file with arguments
 
 ## [1.1.2] - 2023-07-23
 
