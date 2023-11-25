@@ -1,14 +1,14 @@
 # Change Log
 
-## [1.2.0] - UNRELEASED
-
+## [1.2.0] - 2023-11-25
 
 ### Added
 - Setting `batch-runner.saveFileBeforeRun` which will save any edits to the current batch file before executing it. Defaults to `false` ([#14](https://github.com/nils-soderman/vscode-batch-runner/issues/14))
 
 ### Changed
 - Renamed the prefix of all commands from `batch-utils` to `batch-runner`. E.g. `batch-utils.execBatchFile` -> `batch-runner.execBatchFile`.
-- Deprecated the old commands starting with `batch-utils`. They will be removed in next update.
+- Renamed `batch-utils.execBatchFileAsAdmin` -> `batch-runner.execBatchFileAdmin`
+- Deprecated the old commands starting with `batch-utils`. They will be removed in the next update.
 - Removed _"Batch File"_ from the title of the commands. So e.g. _"Run Batch File"_ -> _"Run"_
 - Updated the README.md with new images & added info regarding running a batch file with arguments
 
