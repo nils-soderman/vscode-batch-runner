@@ -37,10 +37,72 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		})
 	);
+
+
+	// Deprecated commands
+	// TODO: Remove these in a future release
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('batch-utils.execBatchFile', (args) => {
+			showDeprecationMessage("execBatchFile");
+
+			let filepath = getFilepath(args);
+
+			if (filepath) {
+				execute.runBatchFile(filepath, [], false);
+			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('batch-utils.execBatchFileArgs', async (args) => {
+			showDeprecationMessage("execBatchFileArgs");
+
+			let filepath = getFilepath(args);
+
+			if (filepath) {
+				const argsToPass = await batchArgs.askForArguments(filepath);
+				if (argsToPass !== undefined) {
+					execute.runBatchFile(filepath, argsToPass, false);
+				}
+			}
+		})
+	);
+
+	context.subscriptions.push(
+		vscode.commands.registerCommand('batch-utils.execBatchFileAsAdmin', (args) => {
+			showDeprecationMessage("execBatchFileAsAdmin");
+
+			let filepath = getFilepath(args);
+
+			if (filepath) {
+				execute.runBatchFile(filepath, [], true);
+			}
+		})
+	);
 }
 
 
 export function deactivate() { }
+
+
+var gDeprecatedMessagesShown: string[] = [];
+function showDeprecationMessage(command: string) {
+	// Only show the message once per command/session
+	if (gDeprecatedMessagesShown.includes(command)) {
+		return;
+	}
+	gDeprecatedMessagesShown.push(command);
+
+	vscode.window.showWarningMessage(
+		`The command 'batch-utils.${command}' is deprecated, please use 'batch-runner.${command}' instead.`,
+		"Open Shortcuts"
+	).then((value) => {
+		if (value === "Open Shortcuts") {
+			vscode.commands.executeCommand("workbench.action.openGlobalKeybindings", command);
+		}
+	});
+};
 
 
 function getFilepath(args: any) {
