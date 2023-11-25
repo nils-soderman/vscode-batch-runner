@@ -35,6 +35,11 @@
 		"name": "Nils Söderman",
 		"url": "https://nilssoderman.com"
 	},
+	"activationEvents": [
+		"onCommand:batch-utils.execBatchFile",
+		"onCommand:batch-utils.execBatchFileArgs",
+		"onCommand:batch-utils.execBatchFileAsAdmin"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
