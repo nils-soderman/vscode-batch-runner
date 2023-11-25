@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-runner.execBatchFileAsAdmin', (args) => {
+		vscode.commands.registerCommand('batch-runner.execBatchFileAdmin', (args) => {
 			let filepath = getFilepath(args);
 
 			if (filepath) {
@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('batch-utils.execBatchFileAsAdmin', (args) => {
-			showDeprecationMessage("execBatchFileAsAdmin");
+			showDeprecationMessage("execBatchFileAsAdmin", "execBatchFileAdmin");
 
 			let filepath = getFilepath(args);
 
@@ -87,19 +87,22 @@ export function deactivate() { }
 
 
 var gDeprecatedMessagesShown: string[] = [];
-function showDeprecationMessage(command: string) {
+function showDeprecationMessage(command: string, newCommand?: string) {
 	// Only show the message once per command/session
 	if (gDeprecatedMessagesShown.includes(command)) {
 		return;
 	}
 	gDeprecatedMessagesShown.push(command);
 
+	if (!newCommand)
+		newCommand = command;
+
 	vscode.window.showWarningMessage(
-		`The command 'batch-utils.${command}' is deprecated, please use 'batch-runner.${command}' instead.`,
+		`The command 'batch-utils.${command}' is deprecated, please use 'batch-runner.${newCommand}' instead.`,
 		"Open Shortcuts"
 	).then((value) => {
 		if (value === "Open Shortcuts") {
-			vscode.commands.executeCommand("workbench.action.openGlobalKeybindings", command);
+			vscode.commands.executeCommand("workbench.action.openGlobalKeybindings", newCommand);
 		}
 	});
 };

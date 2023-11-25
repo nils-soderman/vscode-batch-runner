@@ -3,7 +3,7 @@
 	"displayName": "Batch Runner",
 	"publisher": "NilsSoderman",
 	"description": "Execute batch files in the VS Code terminal",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"engines": {
 		"vscode": "^1.74.0"
 	},
@@ -60,7 +60,7 @@
 				"enablement": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 			},
 			{
-				"command": "batch-runner.execBatchFileAsAdmin",
+				"command": "batch-runner.execBatchFileAdmin",
 				"category": "Batch Runner",
 				"title": "Run as Administrator",
 				"shortTitle": "Run bat file as admin",
@@ -79,7 +79,7 @@
 			"explorer/context": [
 				{
 					"command": "batch-runner.execBatchFile",
-					"alt": "batch-runner.execBatchFileAsAdmin",
+					"alt": "batch-runner.execBatchFileAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
@@ -92,7 +92,7 @@
 			"editor/title/context": [
 				{
 					"command": "batch-runner.execBatchFile",
-					"alt": "batch-runner.execBatchFileAsAdmin",
+					"alt": "batch-runner.execBatchFileAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
@@ -114,7 +114,7 @@
 					"when": "resourceLangId == bat && shellExecutionSupported"
 				},
 				{
-					"command": "batch-runner.execBatchFileAsAdmin",
+					"command": "batch-runner.execBatchFileAdmin",
 					"group": "batch",
 					"when": "resourceLangId == bat && !isInDiffEditor && shellExecutionSupported"
 				}
