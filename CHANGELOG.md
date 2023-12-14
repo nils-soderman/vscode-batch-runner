@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.3.0] - UNRELEASED
+
+### Removed:
+- Removed deprecated commands `batch-utils.execBatchFile`, `batch-utils.execBatchFileAsAdmin` & `batch-utils.execBatchFileArgs`
+
 ## [1.2.0] - 2023-11-25
 
 ### Added
