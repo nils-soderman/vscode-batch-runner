@@ -2,8 +2,11 @@
 
 ## [1.3.0] - UNRELEASED
 
-### Removed:
+### Removed
 - Removed deprecated commands `batch-utils.execBatchFile`, `batch-utils.execBatchFileAsAdmin` & `batch-utils.execBatchFileArgs`
+
+### Changed
+- Default `batch-runner.saveFileBeforeRun` to `true` ([#14](https://github.com/nils-soderman/vscode-batch-runner/issues/14))
 
 ## [1.2.0] - 2023-11-25
 

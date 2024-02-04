@@ -141,7 +141,7 @@
 					},
 					"batch-runner.saveFileBeforeRun": {
 						"type": "boolean",
-						"default": false,
+						"default": true,
 						"scope": "resource",
 						"description": "Save the current batch file before running it"
 					}
