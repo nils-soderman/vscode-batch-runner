@@ -4,8 +4,7 @@
         "node_modules" : true,
         "LICENSE": true,
         "**/**.vsix": true,
-        "builds": true,
-        "test": true
+        "builds": true
     },
     "search.exclude": {
         "out": true,
