@@ -14,15 +14,14 @@ const CMD_PATH_CONFIG_KEY = "cmdPath";
  */
 export function getExtensionConfig(filepath?: string) {
     // Try to get the active workspace folder first, to have it read Folder Settings
-    let workspaceFolder;
+    let workspaceFolder: vscode.Uri | undefined;
     if (filepath) {
-        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(filepath));
+        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(filepath))?.uri;
     }
     else if (vscode.window.activeTextEditor) {
-        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.window.activeTextEditor.document.uri);
+        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.window.activeTextEditor.document.uri)?.uri;
     }
 
-    // TODO: Remove this old option in a future release
     return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME, workspaceFolder);
 }
 
