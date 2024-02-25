@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.3.1] - UNRELEASED
+## [1.3.1] - 2024-02-25
 
 ### Fixed
 - Folder settings being ignored when a workspace is opened
