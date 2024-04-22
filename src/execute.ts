@@ -15,9 +15,13 @@ const TERMINAL_NAME = "Batch Runner Terminal";
  * @param bRefresh If terminal exists, dispose and create a new one
  * @returns The terminal if one could be found/created
  */
-function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true) {
+function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): vscode.Terminal | undefined {
     const createTerminal = () => {
         const cmdPath = utils.getCmdPath();
+        if (!cmdPath) {
+            return undefined;
+        }
+
         return vscode.window.createTerminal(TERMINAL_NAME, cmdPath);
     };
 

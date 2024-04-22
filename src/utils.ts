@@ -43,12 +43,7 @@ export function isRunningAsAdmin() {
  * Returns undefined if the file could not be located
  */
 export function getCmdPath() {
-    let cmdPath: string | undefined = getExtensionConfig().get(CMD_PATH_CONFIG_KEY);
-
-    if (!cmdPath) {
-        // Fallback to this default path
-        cmdPath = "C:\\windows\\System32\\cmd.exe";
-    }
+    let cmdPath = getExtensionConfig().get<string>(CMD_PATH_CONFIG_KEY, "C:\\windows\\System32\\cmd.exe");
 
     // Make sure the path points towards an existing file, otherwise show an error message
     if (!fs.existsSync(cmdPath)) {
