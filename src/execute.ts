@@ -102,9 +102,7 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
  * @returns true if the batch file could be exectued, otherwise false
  */
 export async function runBatchFile(filepath: string, args: string[] = [], bAdmin = false): Promise<boolean> {
-    // Check where we should run the batch file
     const config = utils.getExtensionConfig(filepath);
-    let runBatchIn = config.get<string>("runBatchIn");
 
     // Check if we should save the file before running it
     const bSaveBeforeRun = config.get<boolean>("saveFileBeforeRun");
@@ -112,8 +110,8 @@ export async function runBatchFile(filepath: string, args: string[] = [], bAdmin
         const activeDocument = vscode.window.activeTextEditor?.document;
         if (
             activeDocument &&
-            utils.isPathsSame(filepath, activeDocument.uri.fsPath) &&
-            activeDocument.isDirty
+            activeDocument.isDirty &&
+            utils.isPathsSame(filepath, activeDocument.uri.fsPath)
         ) {
             if (!await activeDocument.save())
                 return false;
@@ -123,6 +121,7 @@ export async function runBatchFile(filepath: string, args: string[] = [], bAdmin
     // If we want to run the batch file as admin, but VS Code is not running as admin,
     // we need to spawn a new CMD window with admin privileges.
     const bForceNewCmd = bAdmin && !utils.isRunningAsAdmin();
+    const runBatchIn = config.get<string>("runBatchIn");
 
     if (bForceNewCmd || runBatchIn === "External-cmd")
         return runBatchFileInCmd(filepath, args, bAdmin);
