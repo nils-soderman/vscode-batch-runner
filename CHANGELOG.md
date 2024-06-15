@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.3.1] - UNRELEASED
+
+### Fixed
+- Cancel the creation of a terminal if cmd.exe cannot be located [#17](https://github.com/nils-soderman/vscode-batch-runner/issues/17)
+
 ## [1.3.0] - 2024-02-10
 
 ### Removed
