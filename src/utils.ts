@@ -12,15 +12,13 @@ const CMD_PATH_CONFIG_KEY = "cmdPath";
  * @param filepath If provided it'll use the file's workspace folder as scope, otherwise it'll try to get the current active filepath.
  * @returns The workspace configuration for this extension _('batchrunner')_
  */
-export function getExtensionConfig(filepath?: string) {
+export function getExtensionConfig(filepath?: vscode.Uri) {
     // Try to get the active workspace folder first, to have it read Folder Settings
     let workspaceFolder: vscode.Uri | undefined;
-    if (filepath) {
-        workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(filepath))?.uri;
-    }
-    else if (vscode.window.activeTextEditor) {
+    if (filepath)
+        workspaceFolder = vscode.workspace.getWorkspaceFolder(filepath)?.uri;
+    else if (vscode.window.activeTextEditor)
         workspaceFolder = vscode.workspace.getWorkspaceFolder(vscode.window.activeTextEditor.document.uri)?.uri;
-    }
 
     return vscode.workspace.getConfiguration(EXTENSION_CONFIG_NAME, workspaceFolder);
 }
@@ -63,8 +61,8 @@ export function getCmdPath() {
 }
 
 /**
- * Check if two paths are the same, ignoring case and normalizing the path
+ * Check if two Uri's are pointing to the same file
  */
-export function isPathsSame(path1: string, path2: string) {
-    return path.normalize(path1).toLowerCase() === path.normalize(path2).toLowerCase();
+export function compareUri(path1: vscode.Uri, path2: vscode.Uri) {
+    return path.normalize(path1.fsPath).toLowerCase() === path.normalize(path2.fsPath).toLowerCase();
 }

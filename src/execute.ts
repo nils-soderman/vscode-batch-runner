@@ -44,18 +44,18 @@ function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): vscode.T
 
 /**
  * Run a batch file in the VSCode terminal
- * @param filepath Absolute filepath to the .bat file
+ * @param file Absolute filepath to the .bat file
  * @returns true if the batch file was executed
  */
-function runBatchFileInTerminal(filepath: string, args: string[] = []) {
+function runBatchFileInTerminal(file: vscode.Uri, args: string[] = []): boolean {
     const terminal = getBatchRunnerTerminal();
-    if (!terminal) {
+    if (!terminal)
         return false;
-    }
 
-    const directory = path.dirname(filepath);
+    const filepath = file.fsPath;
+    const workingDirectory = path.dirname(filepath);
 
-    const command = `cls & cd "${directory}" & "${filepath}" ${args.join(" ")}`;
+    const command = `cls & cd "${workingDirectory}" & "${filepath}" ${args.join(" ")}`;
     terminal.sendText(command, true);
     terminal.show();
 
@@ -65,22 +65,22 @@ function runBatchFileInTerminal(filepath: string, args: string[] = []) {
 
 /**
  * Open a batch file in cmd
- * @param filepath Absolute filepath to the batch file
+ * @param file Absolute filepath to the batch file
  * @param bAdmin Run the batch file with admin privileges
  */
-function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false) {
+function runBatchFileInCmd(file: vscode.Uri, args: string[] = [], bAdmin = false): boolean {
     const cmdPath = utils.getCmdPath();
-    if (!cmdPath) {
+    if (!cmdPath)
         return false;
-    }
 
-    const directory = path.dirname(filepath);
+    const filePath = file.fsPath;
+    const workingDirectory = path.dirname(filePath);
 
     // "Start" command arguments: Title, [/d WorkingDirectory], Command, Parameters    
-    let command = `start "${filepath}" /d "${directory}" "${cmdPath}" /c ""${filepath}" ${args.join(" ")}"`;
+    let command = `start "${filePath}" /d "${workingDirectory}" "${cmdPath}" /c ""${filePath}" ${args.join(" ")}"`;
     if (bAdmin) {
         // To launch the batch as admin, start a new cmd process as admin by using powershell Start-Process with the runAs argument
-        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filepath}""", """&""", cd, /d, """${directory}""", """&""", """${filepath}"""`;
+        command = `powershell Start-Process "${cmdPath}" -verb runAs -ArgumentList /c, title, """${filePath}""", """&""", cd, /d, """${workingDirectory}""", """&""", """${filePath}"""`;
         if (args.length > 0) {
             // TODO: Arguments using quotes (e.g. "key=value") will lose the quotes when running as admin
             command += `, """${args.join(" ")}"""`;
@@ -101,17 +101,16 @@ function runBatchFileInCmd(filepath: string, args: string[] = [], bAdmin = false
  * @param bAdmin Run the batch file with admin privileges 
  * @returns true if the batch file could be exectued, otherwise false
  */
-export async function runBatchFile(filepath: string, args: string[] = [], bAdmin = false): Promise<boolean> {
+export async function runBatchFile(filepath: vscode.Uri, args: string[] = [], bAdmin = false): Promise<boolean> {
     const config = utils.getExtensionConfig(filepath);
 
     // Check if we should save the file before running it
-    const bSaveBeforeRun = config.get<boolean>("saveFileBeforeRun");
-    if (bSaveBeforeRun) {
+    if (config.get<boolean>("saveFileBeforeRun")) {
         const activeDocument = vscode.window.activeTextEditor?.document;
         if (
             activeDocument &&
             activeDocument.isDirty &&
-            utils.isPathsSame(filepath, activeDocument.uri.fsPath)
+            utils.compareUri(filepath, activeDocument.uri)
         ) {
             if (!await activeDocument.save())
                 return false;

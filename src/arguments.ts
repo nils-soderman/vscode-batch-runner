@@ -10,7 +10,7 @@ interface ICachedArgs {
 let cachedArgs: ICachedArgs = {};
 
 
-export async function askForArguments(filepath?: string): Promise<string[] | undefined> {
+export async function askForArguments(filepath?: vscode.Uri): Promise<string[] | undefined> {
     const cachedArg = filepath ? getCachedArgument(filepath) : "";
 
     const argString = await vscode.window.showInputBox({
@@ -35,16 +35,15 @@ export async function askForArguments(filepath?: string): Promise<string[] | und
 }
 
 
-function cacheArguments(filepath: string, arg: string) {
-    cachedArgs[filepath] = {
-        arg: arg,
-    };
+function cacheArguments(filepath: vscode.Uri, arg: string) {
+    cachedArgs[filepath.fsPath] = { arg };
 }
 
 
-function getCachedArgument(filepath: string): string {
-    if (cachedArgs[filepath]) {
-        return cachedArgs[filepath].arg;
+function getCachedArgument(filepath: vscode.Uri): string {
+    if (cachedArgs[filepath.fsPath]) {
+        return cachedArgs[filepath.fsPath].arg;
     }
+
     return "";
 }

@@ -6,8 +6,8 @@ import * as batchArgs from './arguments';
 export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-runner.execBatchFile', (args) => {
-			let filepath = getFilepath(args);
+		vscode.commands.registerCommand('batch-runner.execBatchFile', (uri?: vscode.Uri) => {
+			const filepath = uri || vscode.window.activeTextEditor?.document.uri;
 
 			if (filepath) {
 				execute.runBatchFile(filepath, [], false);
@@ -16,8 +16,8 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-runner.execBatchFileArgs', async (args) => {
-			let filepath = getFilepath(args);
+		vscode.commands.registerCommand('batch-runner.execBatchFileArgs', async (uri?: vscode.Uri) => {
+			const filepath = uri || vscode.window.activeTextEditor?.document.uri;
 
 			if (filepath) {
 				const argsToPass = await batchArgs.askForArguments(filepath);
@@ -29,8 +29,8 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand('batch-runner.execBatchFileAdmin', (args) => {
-			let filepath = getFilepath(args);
+		vscode.commands.registerCommand('batch-runner.execBatchFileAdmin', (uri?: vscode.Uri) => {
+			const filepath = uri || vscode.window.activeTextEditor?.document.uri;
 
 			if (filepath) {
 				execute.runBatchFile(filepath, [], true);
@@ -41,18 +41,3 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 export function deactivate() { }
-
-
-function getFilepath(args: any) {
-	if (args) {
-		// Filepath provided by as an argument (when e.g. running it from the context menu)
-		let filepath: string = args["path"];
-		if (filepath && filepath.startsWith("/")) {
-			filepath = filepath.replace("/", "");
-		}
-		return filepath;
-	}
-
-	// No filepath provided as an argument, get the currently active file instead (e.g. when using the Hotkey)
-	return vscode.window.activeTextEditor?.document.uri.fsPath;
-}
