@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 
-import * as child_process from 'child_process';
+import * as childProcess from 'child_process';
 import * as path from 'path';
-import * as fs from 'fs';
 
 const EXTENSION_CONFIG_NAME = "batch-runner";
 const CMD_PATH_CONFIG_KEY = "cmdPath";
@@ -28,7 +27,7 @@ export function getExtensionConfig(filepath?: vscode.Uri) {
  */
 export function isRunningAsAdmin() {
     try {
-        child_process.execFileSync("net", ["session"], { "stdio": "ignore" });
+        childProcess.execFileSync("net", ["session"], { "stdio": "ignore" });
         return true;
     }
     catch (e) {
@@ -40,11 +39,12 @@ export function isRunningAsAdmin() {
  * Get the absolute path to 'cmd.exe'  
  * Returns undefined if the file could not be located
  */
-export function getCmdPath() {
-    let cmdPath = getExtensionConfig().get<string>(CMD_PATH_CONFIG_KEY, "C:\\windows\\System32\\cmd.exe");
+export async function getCmdPath() {
+    const cmdPath = getExtensionConfig().get<string>(CMD_PATH_CONFIG_KEY, "C:\\windows\\System32\\cmd.exe");
+    const cmdUri = vscode.Uri.file(cmdPath);
 
     // Make sure the path points towards an existing file, otherwise show an error message
-    if (!fs.existsSync(cmdPath)) {
+    if (!await uriExists(cmdUri)) {
         const browseButtonText = "Update path";
         vscode.window.showErrorMessage(`Cmd.exe could not be located at ${cmdPath}`, browseButtonText).then(clickedItem => {
             if (clickedItem === browseButtonText) {
@@ -58,6 +58,17 @@ export function getCmdPath() {
     }
 
     return cmdPath;
+}
+
+/** Check if a file/directory exists at the given Uri */
+export async function uriExists(uri: vscode.Uri) {
+    try {
+        await vscode.workspace.fs.stat(uri);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
 }
 
 /**

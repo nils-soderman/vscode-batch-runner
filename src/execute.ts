@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import * as child_process from 'child_process';
+import * as childProcess from 'child_process';
 import * as path from 'path';
 
 import * as utils from './utils';
@@ -15,9 +15,9 @@ const TERMINAL_NAME = "Batch Runner Terminal";
  * @param bRefresh If terminal exists, dispose and create a new one
  * @returns The terminal if one could be found/created
  */
-function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): vscode.Terminal | undefined {
-    const createTerminal = () => {
-        const cmdPath = utils.getCmdPath();
+async function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): Promise<vscode.Terminal | undefined> {
+    const createTerminal = async () => {
+        const cmdPath = await utils.getCmdPath();
         if (!cmdPath) {
             return undefined;
         }
@@ -47,8 +47,8 @@ function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): vscode.T
  * @param file Absolute filepath to the .bat file
  * @returns true if the batch file was executed
  */
-function runBatchFileInTerminal(file: vscode.Uri, args: string[] = []): boolean {
-    const terminal = getBatchRunnerTerminal();
+async function runBatchFileInTerminal(file: vscode.Uri, args: string[] = []): Promise<boolean> {
+    const terminal = await getBatchRunnerTerminal();
     if (!terminal)
         return false;
 
@@ -68,8 +68,8 @@ function runBatchFileInTerminal(file: vscode.Uri, args: string[] = []): boolean 
  * @param file Absolute filepath to the batch file
  * @param bAdmin Run the batch file with admin privileges
  */
-function runBatchFileInCmd(file: vscode.Uri, args: string[] = [], bAdmin = false): boolean {
-    const cmdPath = utils.getCmdPath();
+async function runBatchFileInCmd(file: vscode.Uri, args: string[] = [], bAdmin = false): Promise<boolean> {
+    const cmdPath = await utils.getCmdPath();
     if (!cmdPath)
         return false;
 
@@ -88,7 +88,7 @@ function runBatchFileInCmd(file: vscode.Uri, args: string[] = [], bAdmin = false
 
     }
 
-    child_process.exec(command);
+    childProcess.exec(command);
 
     return true;
 }
