@@ -2,7 +2,8 @@
 
 .vscode/**
 .vscode-test/**
-out/test/**
+.vscode-test.*
+out/**
 
 test/**
 

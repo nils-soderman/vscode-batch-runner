@@ -15,7 +15,7 @@ const TERMINAL_NAME = "Batch Runner Terminal";
  * @param bRefresh If terminal exists, dispose and create a new one
  * @returns The terminal if one could be found/created
  */
-async function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): Promise<vscode.Terminal | undefined> {
+export async function getBatchRunnerTerminal(bEnsureExists = true, bRefresh = true): Promise<vscode.Terminal | undefined> {
     const createTerminal = async () => {
         const cmdPath = await utils.getCmdPath();
         if (!cmdPath) {

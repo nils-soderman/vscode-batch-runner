@@ -1,15 +1,16 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es6",
-		"outDir": "out",
+		"target": "ES2022",
+		"outDir": "out", // This will only be used for tests, esbuild uses folder dist/
 		"lib": [
-			"es6"
+			"ES2022"
 		],
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true,
-		"removeComments": true
+		"removeComments": true,
+		"esModuleInterop": true
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
 		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */
