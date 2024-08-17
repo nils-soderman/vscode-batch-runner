@@ -3,13 +3,11 @@ import * as vscode from 'vscode';
 import * as assert from 'assert';
 import sinon from 'sinon';
 
-import * as vscodeMock from './vscode-mock';
-
 import * as argsModule from '../arguments';
 
 
 suite('Arguments', function () {
-    
+
     let showInputBoxReturnValue = "";
 
     setup(async () => {
@@ -29,15 +27,15 @@ suite('Arguments', function () {
     test('Ask for Arguments', async function () {
         const uriOne = vscode.Uri.file("/uri-one.txt");
         const uriTwo = vscode.Uri.file("/uri-two.txt");
-        
+
         showInputBoxReturnValue = "First Value";
-        assert.strictEqual(await argsModule.askForArguments(uriOne), ["First Value"]);
-        
+        assert.deepStrictEqual(await argsModule.askForArguments(uriOne), ["First Value"]);
+
         showInputBoxReturnValue = "Second Value";
-        assert.strictEqual(await argsModule.askForArguments(uriTwo), ["Second Value"]);
+        assert.deepStrictEqual(await argsModule.askForArguments(uriTwo), ["Second Value"]);
 
         // Because uriOne now as a default value cached, we expect to see the first value again.
-        assert.strictEqual(await argsModule.askForArguments(uriOne), ["First Value"]);
+        assert.deepStrictEqual(await argsModule.askForArguments(uriOne), ["First Value"]);
     });
 
 });
