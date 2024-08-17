@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.3.2] - 2024-08-17
+
+### Fixed:
+- Use `cd /d` for setting the working directory, accommodating drive changes
+
+### API Changes:
+- The commands now accept a `vscode.Uri` argument and return a `Promise<boolean>` indicating whether the file was executed or not
+
 ## [1.3.1] - 2024-06-20
 
 ### Fixed
