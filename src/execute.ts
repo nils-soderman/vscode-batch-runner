@@ -55,7 +55,7 @@ async function runBatchFileInTerminal(file: vscode.Uri, args: string[] = []): Pr
     const filepath = file.fsPath;
     const workingDirectory = path.dirname(filepath);
 
-    const command = `cls & cd "${workingDirectory}" & "${filepath}" ${args.join(" ")}`;
+    const command = `cls & cd /d "${workingDirectory}" & "${filepath}" ${args.join(" ")}`;
     terminal.sendText(command, true);
     terminal.show();
 
