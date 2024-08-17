@@ -96,11 +96,13 @@ suite('Execute', function () {
 
         const batchFile = vscode.Uri.joinPath(workspaceDir, "out", "save-file-before-run.bat");
         await vscode.workspace.fs.writeFile(batchFile, new Uint8Array());
-        
+
         const editor = await vscode.window.showTextDocument(batchFile);
-        editor.edit(editBuilder => {
-            editBuilder.insert(new vscode.Position(0, 0), `echo ${output}> save-file-before-run.txt\r\n`);
-        });
+        assert.ok(
+            await editor.edit(editBuilder => {
+                editBuilder.insert(new vscode.Position(0, 0), `echo ${output}> save-file-before-run.txt\r\n`);
+            })
+        );
 
         extensionConfiguration.update("saveFileBeforeRun", false);
         assert.ok(await execute.runBatchFile(batchFile));
