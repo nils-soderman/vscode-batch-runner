@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.4.0] - 2025-06-22
+
+- Enable the run commands in the diff editor [#22](https://github.com/nils-soderman/vscode-batch-runner/issues/22)
+
 ## [1.3.2] - 2024-08-17
 
 ### Fixed:
